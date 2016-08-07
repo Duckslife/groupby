@@ -1,0 +1,157 @@
+<!-- 기본 템플릿 구조는 베이스를 따름 -->
+{% extends 'common/base.html' %}
+<!--  static file load -->
+{% load staticfiles %}
+
+
+    <!-- 컨텐츠 블럭만 리프레쉬 -->
+    {% block nav %}
+        <nav>
+            <ul class="list-inline" >
+                <li class="active">
+                    <a href="{% url 'index' %}">Discover</a>
+                </li>
+                <li >
+                    <a href="blog.html">Drops</a>
+                </li>
+                <li>
+                    <a href="{% url 'board' id=1 %}">board</a>
+                </li>
+                <li class="last">
+                    <a href="#"><img class="social" src="{%  static 'img/icon/icon-facebook.png' %}" alt="facebook"></a>
+                    <a href="#"><img class="social" src="{%  static 'img/icon/icon-twitter.png'%} " alt="twitter"></a>
+                </li>
+            </ul>
+        </nav>
+    {% endblock %}
+
+   {% block content %}
+       <style>
+    .parallax {
+        /* The image used */
+        background-image: url("http://cfile220.uf.daum.net/image/21312F3852FEE44A074C1E");
+
+        /* Set a specific height */
+        height: 100%;
+
+        /* Create the parallax scrolling effect */
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+       .black{
+           color:#FFFFFF;
+           text-shadow: 0.1em 0.1em 0.15em #333;
+       }
+    </style>
+
+   <!--main start-->
+    <div>
+        <section>
+            <!--banner image-->
+            <img src="{{ product.title_image }}" class="img-rounded col-xs-12" alt="product" >
+
+            <!--project title-->
+            <h1>{{ product.title }}</h1>
+            <h1 class="spacer">___</h1>
+
+            <!--project tags-->
+            <p class="item-tags">
+                <a href="#" class="filter" data-filter="{{ product.tags }}">{{ product.tags }}</a>
+            </p>
+
+            <!--project content-->
+            <p class="item-description"><strong>{{ product.sub_title }}</strong></p>
+            <p>{{ product.text }}</p>
+            <hr>
+
+            <!--navigation-->
+            <ul class="pager">
+                {% if prev_product %}
+                <li class="previous "><a href="{% url 'product_detail' id=prev_product.id %}">&lt; Prev</a></li>
+                {% else %}
+                <li class="previous disabled"><a href="#">&lt; Prev</a></li>
+                {% endif %}
+
+                {% if next_product.id %}
+                <li class="next"><a href="{% url 'product_detail' id=next_product.id %}">Next &gt;</a></li>
+                {% else %}
+                <li class="next disabled"><a href="#">Next &gt;</a></li>
+                {% endif %}
+            </ul>
+            <hr>
+
+            <!--share-->
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <h3 class="share">Share</h3>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-right">
+                    <a href="#"><img class="social" src="{%  static 'img/icon/icon-mail.png' %}" alt="Mail"></a>
+                    <a href="#"><img class="social" src="{%  static 'img/icon/icon-facebook.png'%}" alt="Facebook"></a>
+                    <a href="#"><img class="social" src="{%  static 'img/icon/icon-twitter.png'%}" alt="Twitter"></a>
+                    <a href="#"><img class="social" src="{%  static 'img/icon/icon-google.png'%}" alt="Google plus"></a>
+                </div>
+            </div>
+
+        </section>
+    </div>
+    <!--main end-->
+    {% endblock content %}
+
+
+
+    {% block item_tags %}
+    {% for itemtag in itemtags %}
+        <a href="#" class="filter" data-filter="{{ itemtag.title }}"> {{ itemtag.title }}</a>
+    {% endfor %}
+    {% endblock %}
+
+
+    {% block product %}
+    <!--work 1-->
+    {% for product in products %}
+
+        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6 mix {{ product.tags }}">
+        <div class="panel panel-default item">
+            <div class="panel-heading">
+                <a href="{% url 'product_detail' id=product.id %}">
+                    <!--work image-->
+                    <img class="img-responsive item-img" src="{{ product.title_image }} " alt="product">
+
+                </a>
+            </div>
+            <div class="panel-body">
+
+                <!--work title-->
+                <a href="product_detail.html"><h4 class="item-title">{{ product.title }} </h4></a>
+
+
+
+                <!--work short description-->
+                <p class="item-description">{{ product.sub_title }}</p>
+
+                <p><h3><i class="fa fa-usd"> </i> {{ product.sale_price }}<small> <del>{{ product.price }}</del></small></h3></p>
+                <!--work category-->
+                <p class="item-category ">
+                    <i class="fa fa-eye"> {{ product.view_hit }} </i>
+                    &nbsp;&nbsp;<i class="fa fa-thumbs-o-up"> {{ product.like }} </i> &nbsp;&nbsp;
+                    <i class="fa fa-shopping-cart"> {{ product.purchased }} </i>
+
+                </p>
+
+                <hr>
+
+                <!--work tags-->
+                <p class="item-tags">
+                    <a href="#">{{ product.tags }}</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+
+    {% endblock product %}
