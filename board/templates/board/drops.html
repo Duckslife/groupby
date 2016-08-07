@@ -1,0 +1,142 @@
+<!-- 기본 템플릿 구조는 베이스를 따름 -->
+{% extends 'common/base.html' %}
+<!--  static file load -->
+{% load staticfiles %}
+
+
+    <!-- 컨텐츠 블럭만 리프레쉬 -->
+    {% block nav %}
+        <nav>
+            <ul class="list-inline" >
+                <li >
+                    <a href="{% url 'index' %}">Discover</a>
+                </li>
+                <li class="active">
+                    <a href="{% url 'drops' %}">Drops</a>
+                </li>
+                <li >
+                    <a href="{% url 'board' id=1 %}">board</a>
+                </li>
+                <li class="last">
+                    <a href="#"><img class="social" src="{%  static 'img/icon/icon-facebook.png' %}" alt="facebook"></a>
+                    <a href="#"><img class="social" src="{%  static 'img/icon/icon-twitter.png'%} " alt="twitter"></a>
+                </li>
+            </ul>
+        </nav>
+    {% endblock %}
+   {% block content %}
+       <style>
+        .parallax {
+            /* The image used */
+            background-image: url("data:image/jpeg;base64,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                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ");
+
+            /* Set a specific height */
+            height: 100%;
+
+            /* Create the parallax scrolling effect */
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+           .black{
+               color:#FFFFFF;
+               text-shadow: 0.1em 0.1em 0.15em #333;
+           }
+        </style>
+        <script>
+            function menu_click(obj){
+                $(obj).addClass("active");
+                //$(this).removeClass("active");
+            }
+        </script>
+   <!--main start-->
+    <div class="parallax">
+        <section style="">
+            <div class="row text-center">
+                <div class="col-lg-12">
+
+                    <!--activity image-->
+                    <img class="img-responsive img-rounded" src="https://massdrop-s3.imgix.net/product-images/msi-geforce-gtx-1080-armor-8g-oc/MD-22987_20160707133419_09ca86956072a687.jpg?auto=format&fm=jpg&fit=crop&w=965&h=292&dpr=1                                                                                                                                                                          " alt="Project header">
+
+                    <!--activity title -->
+                    <h1 class="black">Bringing enthusiasts together</h1>
+                    <h1 class="spacer black">___</h1>
+
+                    <!--activity descritpion-->
+                    <p class="work"><span class="black">Explore communities, products and stories you're passionate about.</span></p>
+                <div class="container-fluid">
+                    <div class="col-lg-6">
+                        <br>
+                        <button class="btn btn-primary btn-lg"><i class="fa fa-facebook">                            </i> Sign Up With Facebook</button>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <br>
+                        <button class="btn btn-info btn-lg"><i class="fa fa-envelope-o"> </i>                                Sign Up With Email</button>
+
+                    </div>
+                </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+    <!--main end-->
+    {% endblock content %}
+
+
+
+    {% block item_tags %}
+    {% for itemtag in itemtags %}
+        <a href="#" class="filter" data-filter="{{ itemtag.title }}"> {{ itemtag.title }}</a>
+    {% endfor %}
+    {% endblock %}
+
+
+    {% block product %}
+    <!--work 1-->
+    {% for product in products %}
+
+        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6 mix {{ product.tags }}">
+        <div class="panel panel-default item">
+            <div class="panel-heading">
+                <a href="{% url 'product_detail' id=product.id %}">
+                    <!--work image-->
+                    <img class="img-responsive item-img" src="{{ product.title_image }} " alt="product">
+
+                </a>
+            </div>
+            <div class="panel-body">
+
+                <!--work title-->
+                <a href="product_detail.html"><h4 class="item-title">{{ product.title }} </h4></a>
+
+
+
+                <!--work short description-->
+                <p class="item-description">{{ product.sub_title }}</p>
+
+                <p><h3><i class="fa fa-usd"> </i> {{ product.sale_price }}<small> <del>{{ product.price }}</del></small></h3></p>
+                <!--work category-->
+                <p class="item-category ">
+                    <i class="fa fa-eye"> {{ product.view_hit }} </i>
+                    &nbsp;&nbsp;<i class="fa fa-thumbs-o-up"> {{ product.like }} </i> &nbsp;&nbsp;
+                    <i class="fa fa-shopping-cart"> {{ product.purchased }} </i>
+
+                </p>
+
+                <hr>
+
+                <!--work tags-->
+                <p class="item-tags">
+                    <a href="#">{{ product.tags }}</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+
+    {% endblock product %}

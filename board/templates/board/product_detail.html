@@ -8,11 +8,11 @@
     {% block nav %}
         <nav>
             <ul class="list-inline" >
-                <li class="active">
+                <li >
                     <a href="{% url 'index' %}">Discover</a>
                 </li>
-                <li >
-                    <a href="blog.html">Drops</a>
+                <li class="active">
+                    <a href="{% url 'drops' %}">Drops</a>
                 </li>
                 <li>
                     <a href="{% url 'board' id=1 %}">board</a>

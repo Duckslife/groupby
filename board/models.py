@@ -16,11 +16,6 @@ class Board(models.Model):
     o_id = models.IntegerField(default=0)
     reg_date = models.DateTimeField(default=timezone.now)
     mod_date = models.DateTimeField(blank=True, null=True)
-    published_date = models.DateTimeField(blank=True, null=True)
-
-    def publish(self):
-        self.published_date = timezone.now()
-        self.save()
 
     def __unicode__(self):
         return self.title

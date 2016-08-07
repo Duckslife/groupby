@@ -1,0 +1,138 @@
+<!-- 기본 템플릿 구조는 베이스를 따름 -->
+{% extends 'common/base.html' %}
+<!--  static file load -->
+{% load staticfiles %}
+
+
+    <!-- 컨텐츠 블럭만 리프레쉬 -->
+    {% block nav %}
+        <nav>
+            <ul class="list-inline" >
+                <li>
+                    <a href="{% url 'index' %}">Discover</a>
+                </li>
+                <li >
+                    <a href="{% url 'drops' %}">Drops</a>
+                </li>
+                <li class="active">
+                    <a href="{% url 'board' id=1 %}">board</a>
+                </li>
+                <li class="last">
+                    <a href="#"><img class="social" src="{%  static 'img/icon/icon-facebook.png' %}" alt="facebook"></a>
+                    <a href="#"><img class="social" src="{%  static 'img/icon/icon-twitter.png'%} " alt="twitter"></a>
+                </li>
+            </ul>
+        </nav>
+    {% endblock %}
+
+   {% block content %}
+       <style>
+    .parallax {
+        /* The image used */
+        background-image: url("http://platum.kr/wp-content/uploads/2015/04/Designer-Fund_Community_Article_02_1500.jpg                                                                                         ");
+
+        /* Set a specific height */
+        height: 100%;
+
+        /* Create the parallax scrolling effect */
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+       .black{
+           color:#FFFFFF;
+           text-shadow: 0.1em 0.1em 0.15em #333;
+       }
+    </style>
+
+   <!--main start-->
+    <div class="parallax">
+        <section style="">
+            <div class="row text-center">
+                <div class="col-lg-12">
+
+                    <!--activity image-->
+                    <!--<img class="img-responsive img-rounded" src="https://massdrop-s3.imgix.net/product-images/roccat-ryos-mk-fx-rgb-mechanical-gaming-keyboard/MD-22121_20160628141400_628876db7deebde6.jpg?auto=format&fm=jpg&fit=crop&w=965&h=292&dpr=1                                                                                                                                                                                          " alt="Project header">-->
+
+                    <!--activity title -->
+                    <h2 class="black">자유롭게 이야기하세요.</h2>
+                    <h3 class="spacer black">___</h3>
+
+                    <!--activity descritpion-->
+                    <p class="work"><span class="black">먹고살기가 힘듭니다.</span></p>
+                <div class="container-fluid">
+                    <div class="row">
+                        <form class="well text-left" method="post"> {% csrf_token %}
+                          {{ form.as_p }}
+                        <button type="submit" class="class="save btn btn-danger btn-lg"><i class="fa fa-pencil-square-o"> </i> 작성완료</button>
+                        </form>
+                        <br>
+
+
+                    </div>
+
+                </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+    <!--main end-->
+    {% endblock content %}
+
+
+
+    {% block item_tags %}
+    {% for itemtag in itemtags %}
+        <a href="#" class="filter" data-filter="{{ itemtag.title }}"> {{ itemtag.title }}</a>
+    {% endfor %}
+    {% endblock %}
+
+
+    {% block product %}
+    <!--work 1-->
+    {% for product in products %}
+
+        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6 mix {{ product.tags }}">
+        <div class="panel panel-default item">
+            <div class="panel-heading">
+                <a href="{% url 'product_detail' id=product.id %}">
+                    <!--work image-->
+                    <img class="img-responsive item-img" src="{{ product.title_image }} " alt="product">
+
+                </a>
+            </div>
+            <div class="panel-body">
+
+                <!--work title-->
+                <a href="product_detail.html"><h4 class="item-title">{{ product.title }} </h4></a>
+
+
+
+                <!--work short description-->
+                <p class="item-description">{{ product.sub_title }}</p>
+
+                <p><h3><i class="fa fa-usd"> </i> {{ product.sale_price }}<small> <del>{{ product.price }}</del></small></h3></p>
+                <!--work category-->
+                <p class="item-category ">
+                    <i class="fa fa-eye"> {{ product.view_hit }} </i>
+                    &nbsp;&nbsp;<i class="fa fa-thumbs-o-up"> {{ product.like }} </i> &nbsp;&nbsp;
+                    <i class="fa fa-shopping-cart"> {{ product.purchased }} </i>
+
+                </p>
+
+                <hr>
+
+                <!--work tags-->
+                <p class="item-tags">
+                    <a href="#">{{ product.tags }}</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+
+    {% endblock product %}
