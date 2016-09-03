@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+<head>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <script src="{% static 'js/custom.js' %}"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class = "container">
+	<div class="wrapper">
+		<form action="/login" method="post" name="login_form" class="form-signin">
+		    <h3 class="form-signin-heading">로그인</h3>
+			  <hr class="colorgraph"><br>
+
+			  <input type="text" class="form-control" name="Username" placeholder="Username" required="" autofocus="" />
+			  <input type="password" class="form-control" name="Password" placeholder="Password" required=""/>
+
+			  <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Login" type="Submit">Login</button>
+              <button class="btn btn-lg btn-primary btn-block"  onclick="join()">회원가입</button>
+		</form>
+	</div>
+</div>
+{% if err %}
+<script>
+    alert('비밀번호 또는 아이디 확인 필요')
+</script>
+{% endif %}
+</body>
+</html>
