@@ -11,6 +11,7 @@ from  board.models import Product
 from  board.models import ItemTags
 
 
+# slack git integration check
 def index(request):
     return render(request, 'login_page.html')
 
